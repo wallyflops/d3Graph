@@ -1,7 +1,7 @@
 var template_path = Qva.Remote + "?public=only&name=Extensions/jamesExt/";
 function extension_Init()
 {
-	// Use QlikView's method of loading other files needed by an extension. These files should be added to your extension .zip file (.qar)
+	//This is copied code- may be faulty but all it should do is load d3.js then run extension_Done
 	if (typeof jQuery == 'undefined') {
 	    Qva.LoadScript(template_path + 'd3.js', extension_Done);
 	}
@@ -15,7 +15,7 @@ function extension_Init()
     //});
 
 }
-/*	//UNCOMMENT THIS BLOCK OF CODE TO ENABLE SELECT BOXES IN PROPERTIES
+	//UNCOMMENT THIS BLOCK OF CODE TO ENABLE SELECT BOXES IN PROPERTIES
 	if (Qva.Mgr.mySelect == undefined) {
     Qva.Mgr.mySelect = function (owner, elem, name, prefix) {
         if (!Qva.MgrSplit(this, name, prefix)) return;
@@ -52,13 +52,12 @@ function extension_Init()
         element.style.display = Qva.MgrGetDisplayFromMode(this, mode);
  
     }
-}*/
+}
 function extension_Done(){
-	//Add extension
 	Qva.AddExtension('jamesExt', function(){
-		//Load a CSS style sheet
 		Qva.LoadCSS(template_path + "style.css");
 		var _this = this;
+		
 		//get first text box
 		var text1 = _this.Layout.Text0.text.toString();
 		//get check box value
@@ -76,10 +75,13 @@ function extension_Done(){
 			//if it does exist, empty the div so we can fill it again
 			$("#" + divName).empty();
 		}
-		//create a variable to put the html into
-		var html = "test html";
+		//ATN: The below 2 lines will show you a demo- writing HTML into the extension box.
+		//var html = "test html";
 		//$("#" + divName).html(html);
-
+		
+		
+		//The below line is where are problem is- this isn't getting displayed in any way, shape or form and I'm
+		//very unsure how to debug.
 	   d3.select("#" + divName).append("svg").attr("width", _this.GetWidth()).attr("height", _this.GetHeight()).data(_this_Data).enter().append("rect").attr("x",1).attr("y",25);
 		
 	    
