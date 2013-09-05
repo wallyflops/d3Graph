@@ -201,8 +201,8 @@ function extension_Done() {
 //Initiate extension
 	//AJL: Embeds Firebug Lite to the qlikview screen which should be very helpful. Will need to remove once done
 
- //Qva.LoadScript('https://getfirebug.com/firebug-lite.js', function(){
+ Qva.LoadScript('https://getfirebug.com/firebug-lite.js', function(){
 
 
 extension_Init();
- //	});
+ 	});
