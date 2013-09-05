@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ExtensionObject Label="D3js Parrellel Coordindates Chart" Description="Parrallel Coordindates Chart" PageHeight="500">
+<ExtensionObject Label="D3js Barchart" Description="Barchart using D3js" PageHeight="500">
    <Dimension Label="Dimension 1" Initial="Path" TargetName="Dimension Name" />
-   <!--<Dimension Label="Dimension 2" Initial="Measure" TargetName="Dimension Name" />-->
-   <Measurement Label="Measure 1" Initial="Sum(Measure)"/>
-	<Text Label="Text Box 1" Type="text" Expression="TITLE"/>
-    <Text Label="selectBox 1" Type="select" Select="select1,select2,select3" SelectLabel="selectL1,selectL2,selectL3" Expression="selectL3"/>
+   <Dimension Label="Dimension 2" Initial="Measure" TargetName="Dimension Name" />
+   <Dimension Label="Dimension 3" Initial="Measure" TargetName="Dimension Name" />
+   <Measurement Label="Measure 1" Initial="Count(Name)"/>
   </ExtensionObject>
 
 

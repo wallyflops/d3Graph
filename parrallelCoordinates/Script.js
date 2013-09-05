@@ -71,9 +71,31 @@ function extension_Init()
 function extension_Done() {
 	Qva.AddExtension('parrallelCoordinates', function(){ 
 	
+ var _this = this;
+ 
+		//Collect data from QV______________________
+		var dataset = [];
+		var textset = [];
+		var textset1 = [];
+		var td = _this.Data;
+		for (var f=0; f < td.Rows.length; f++ )		{
+				var row = td.Rows[f];
+
+				//JW - Starting with 3 dimensions, not sure if QV requires a measure so I've left that in for now.
+				var dim1 = row[0].text;
+				var dim2 = row[1].text;
+				var measure1 = row[2].text;
+				
+		 		textset = textset.concat(dim1);
+				textset1 = textset1.concat(dim2);
+		 		dataset = dataset.concat(measure1);
+		}
+		//Collect data from QV END___________________
+	
+	//Drawing PC graph BEGIN____________	
 	var m = [30, 10, 10, 10],
     w = 960 - m[1] - m[3],
-    h = 500 - m[0] - m[2];
+    h = 500 - m[0] - m[2];	
 
 var x = d3.scale.ordinal().rangePoints([0, w], 1),
     y = {};
@@ -83,90 +105,63 @@ var line = d3.svg.line(),
     background,
     foreground;
 
-var svg = d3.select("body").append("svg:svg")
+			
+var svg = d3.select("#"+divName)
+    .append("svg")
     .attr("width", w + m[1] + m[3])
     .attr("height", h + m[0] + m[2])
-  .append("svg:g")
+  .append("g") //Group element
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
- 
- 
-
-   //Extract the list of dimensions and create a scale for each.
-  x.domain(dimensions = d3.keys(dataset[0]).filter(function(d) {
-    return d = (y[d] = d3.scale.linear()
-        .domain(d3.extent(dataset, function(p) { return +p[d]; }))
-        .range([h, 0]));
-  }))
-
- 
- 
- 
-var _this = this;
- 		var dataset = [];
-		var textset = [];
-		var td = _this.Data;
-		for (var f=0; f < td.Rows.length; f++ )		{
-				var row = td.Rows[f];
-				//Dimension 1 : Defined in the Definition.xml
-				var dim1 = row[0].text;
-				//Dimension 2 : Defined in the Definition.xml
-				var measure1 = row[1].text;
-				
-		 		textset = textset.concat(dim1);
-		 		dataset = dataset.concat(measure1);
-
-		};
-		
-background = svg.append("svg:g")
+			
+background = svg.append("g")
       .attr("class", "background")
     .selectAll("path")
       .data(dataset)
-    .enter().append("svg:path")
+    .enter().append("path")
       .attr("d", path);
 
+
   // Add blue foreground lines for focus.
-  foreground = svg.append("svg:g")
+  foreground = svg.append("g")
       .attr("class", "foreground")
     .selectAll("path")
       .data(dataset)
-    .enter().append("svg:path")
+    .enter().append("path")
       .attr("d", path);
 
   // Add a group element for each dimension.
   var g = svg.selectAll(".dimension")
       .data(dimensions)
-    .enter().append("svg:g")
+    .enter().append("g")
       .attr("class", "dimension")
       .attr("transform", function(d) { return "translate(" + x(d) + ")"; });
 
   // Add an axis and title.
-  g.append("svg:g")
+  g.append("g")
       .attr("class", "axis")
-      .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
+      .each(function(d) { d3.select(_this).call(axis.scale(y[d])); })
     .append("svg:text")
       .attr("text-anchor", "middle")
       .attr("y", -9)
       .text(String);
 
   // Add and store a brush for each axis.
-  g.append("svg:g")
+  g.append("g")
       .attr("class", "brush")
-      .each(function(d) { d3.select(this).call(y[d].brush = d3.svg.brush().y(y[d]).on("brush", brush)); })
+      .each(function(d) { d3.select(_this).call(y[d].brush = d3.svg.brush().y(y[d]).on("brush", brush)); })
     .selectAll("rect")
       .attr("x", -8)
       .attr("width", 16);
-	  
-	  
+
+	 
+
 })};
-
-
-
 	    
+extension_Init();
+
 
 //Initiate extension
 	//AJL: Embeds Firebug Lite to the qlikview screen which should be very helpful. Will need to remove once done.
  Qva.LoadScript('https://getfirebug.com/firebug-lite.js', function(){
-
-
 extension_Init();
  	});
