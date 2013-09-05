@@ -3,32 +3,19 @@ var template_path = Qva.Remote + "?public=only&name=Extensions/d3Bar/";
 
 
 function extension_Init()
-{
-	//This is copied code- may be faulty but all it should do is load d3.js then run extension_Done
-
-  
+{ 
 	//jQuery not defined, so load the jQuery.js
 	if (typeof jQuery == 'undefined') {
 	
 	   	Qva.LoadScript(template_path+'jquery.js',function() {
 	   		Qva.LoadScript(template_path+'json2.js',function() {
 				Qva.LoadScript(template_path+'d3.v3.min.js', extension_Done());
-			
-			
-
-
-			
 			});
 		});
 	}
-	else {		
-
-	   
+	else {		  
 	   		Qva.LoadScript(template_path+'json2.js',function() {
 	   				Qva.LoadScript(template_path+'d3.v3.min.js', extension_Done());
-
-	   	
-	   		
 		});
 	}        
     	
