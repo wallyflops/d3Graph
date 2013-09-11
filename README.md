@@ -1,3 +1,11 @@
+d3.js example extensions in QlikView.
+
+** Extensions Working on:
+-Barchart
+-Parrallel Coordinates
+
+
+
 Adding Extensions:
 
 Installation-
